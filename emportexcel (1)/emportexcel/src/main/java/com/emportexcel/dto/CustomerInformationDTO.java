@@ -1,0 +1,22 @@
+package com.emportexcel.dto;
+
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustomerInformationDTO {
+    private Integer stt;
+    private String fullName;
+    private String sex;
+    private LocalDate dob;
+    private String passportNo;
+    private LocalDate doi;
+    private LocalDate doe;
+}
