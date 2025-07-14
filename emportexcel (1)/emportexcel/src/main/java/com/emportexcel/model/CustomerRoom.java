@@ -12,20 +12,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer_information")
-
+@Table(name = "customer_room")
 public class CustomerRoom {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // liên kết 1-1 với bảng customer_information
-    @OneToOne
-    @JoinColumn(name = "customer_info_id", referencedColumnName = "id")
-    private CustomerInformation customerInformation;
-
+    private String fullName;
+    private String sex;
+    private LocalDate dob;
     private String room;
-
-
 }
+

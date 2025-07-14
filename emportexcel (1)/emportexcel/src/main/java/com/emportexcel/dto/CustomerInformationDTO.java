@@ -19,4 +19,5 @@ public class CustomerInformationDTO {
     private String passportNo;
     private LocalDate doi;
     private LocalDate doe;
+    private String room;
 }

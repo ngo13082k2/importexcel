@@ -10,13 +10,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerRoomDTO {
-
+    private Integer stt;
     private String fullName;
     private String sex;
     private LocalDate dob;
+    private String room;
+
     private String passportNo;
     private LocalDate doi;
     private LocalDate doe;
-    private String room;
-
 }

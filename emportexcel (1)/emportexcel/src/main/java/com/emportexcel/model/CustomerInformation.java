@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer_room")
+@Table(name = "customer_information")
 
 public class CustomerInformation {
 
@@ -27,8 +27,7 @@ public class CustomerInformation {
     private String passportNo;
     private LocalDate doi;
     private LocalDate doe;
-    @OneToOne(mappedBy = "customerInformation", cascade = CascadeType.ALL)
-    private CustomerRoom customerRoom;
+
 
 
 }
