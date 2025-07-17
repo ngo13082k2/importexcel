@@ -110,10 +110,10 @@ public class ExcelParserService {
                 CustomerRoomDTO dto = new CustomerRoomDTO();
 
                 dto.setStt(getIntegerCell(row.getCell(0)));
-                dto.setFullName(getStringCell(row.getCell(1)));  // FullName - cột B
-                dto.setSex(getStringCell(row.getCell(2)));       // Sex - cột C
-                dto.setDob(getDateCell(row.getCell(3)));         // DOB - cột D
-                dto.setRoom(getStringCell(row.getCell(4)));      // Room - cột E
+                dto.setFullName(getStringCell(row.getCell(1)));
+                dto.setSex(getStringCell(row.getCell(2)));
+                dto.setDob(getDateCell(row.getCell(3)));
+                dto.setRoom(getStringCell(row.getCell(4)));
 
                 dtoList.add(dto);
             }

@@ -15,9 +15,10 @@ public class CustomerRoomFullInfoDTO {
     private String sex;
     private LocalDate dob;
     private String room;
-
+    private Integer stt;
     private String passportNo;
     private LocalDate doi;
     private LocalDate doe;
+    private String duplicatedSTT;
 
 }

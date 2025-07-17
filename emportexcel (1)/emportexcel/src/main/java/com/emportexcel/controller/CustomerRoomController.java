@@ -40,13 +40,13 @@ public class CustomerRoomController {
     }
     @GetMapping("/get-all-field")
     public ResponseEntity<List<CustomerRoomFullInfoDTO>> getAllFullRoomInfo() {
-        List<CustomerRoomFullInfoDTO> result = customerRoomService.getAllRoomWithPassportInfo();
+        List<CustomerRoomFullInfoDTO> result = customerRoomService.getCustomerRoomWithInfo();
         return ResponseEntity.ok(result);
     }
     @GetMapping("/export")
     public ResponseEntity<InputStreamResource> exportCustomerRoomToExcel() {
         try {
-            List<CustomerRoomFullInfoDTO> data = customerRoomService.getAllRoomWithPassportInfo();
+            List<CustomerRoomFullInfoDTO> data = customerRoomService.getCustomerRoomWithInfo();
             ByteArrayInputStream in = excelParserService.exportToExcel(data);
 
             HttpHeaders headers = new HttpHeaders();

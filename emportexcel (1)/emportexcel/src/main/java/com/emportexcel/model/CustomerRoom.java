@@ -17,10 +17,9 @@ public class CustomerRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private Integer stt;
     private String fullName;
     private String sex;
     private LocalDate dob;
     private String room;
 }
-
