@@ -20,6 +20,6 @@ public class CustomerRoom {
     private Integer stt;
     private String fullName;
     private String sex;
-    private LocalDate dob;
+    private String   dob;
     private String room;
 }

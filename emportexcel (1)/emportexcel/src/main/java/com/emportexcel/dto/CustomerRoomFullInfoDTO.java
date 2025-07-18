@@ -13,12 +13,12 @@ import java.time.LocalDate;
 public class CustomerRoomFullInfoDTO {
     private String fullName;
     private String sex;
-    private LocalDate dob;
+    private String  dob;
     private String room;
     private Integer stt;
     private String passportNo;
-    private LocalDate doi;
-    private LocalDate doe;
+    private String  doi;
+    private String  doe;
     private String duplicatedSTT;
 
 }

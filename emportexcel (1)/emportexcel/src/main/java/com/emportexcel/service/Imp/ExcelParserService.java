@@ -21,9 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class ExcelParserService {
@@ -59,16 +58,18 @@ public class ExcelParserService {
         return dtoList;
     }
 
+
     private String getStringCell(Cell cell) {
         if (cell == null) return null;
         return cell.getCellType() == CellType.STRING
                 ? cell.getStringCellValue().trim()
                 : String.valueOf((long) cell.getNumericCellValue());
     }
+
     private Integer getIntegerCell(Cell cell) {
         if (cell == null) return null;
         if (cell.getCellType() == CellType.NUMERIC) {
-            return (int) cell.getNumericCellValue(); // chuyển từ double sang int
+            return (int) cell.getNumericCellValue();
         } else if (cell.getCellType() == CellType.STRING) {
             try {
                 return Integer.parseInt(cell.getStringCellValue().trim());
@@ -79,16 +80,16 @@ public class ExcelParserService {
         return null;
     }
 
-    private LocalDate getDateCell(Cell cell) {
+    private String getDateCell(Cell cell) {
         if (cell == null) return null;
 
         if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
-            return cell.getLocalDateTimeCellValue().toLocalDate();
+            return cell.getLocalDateTimeCellValue().toLocalDate().toString();
         }
 
         if (cell.getCellType() == CellType.STRING) {
             try {
-                return LocalDate.parse(cell.getStringCellValue().trim());
+                return cell.getStringCellValue().trim();
             } catch (Exception e) {
                 return null;
             }
@@ -96,14 +97,16 @@ public class ExcelParserService {
 
         return null;
     }
+
     public List<CustomerRoomDTO> parseCustomerRoomExcel(MultipartFile file) throws Exception {
         List<CustomerRoomDTO> dtoList = new ArrayList<>();
+        Map<String, CustomerRoomDTO> roomMapping = new HashMap<>();
 
         try (InputStream is = file.getInputStream(); Workbook workbook = new XSSFWorkbook(is)) {
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
 
-            if (rows.hasNext()) rows.next(); // bỏ qua dòng tiêu đề
+            if (rows.hasNext()) rows.next();
 
             while (rows.hasNext()) {
                 Row row = rows.next();
@@ -113,7 +116,26 @@ public class ExcelParserService {
                 dto.setFullName(getStringCell(row.getCell(1)));
                 dto.setSex(getStringCell(row.getCell(2)));
                 dto.setDob(getDateCell(row.getCell(3)));
-                dto.setRoom(getStringCell(row.getCell(4)));
+                dto.setRoom(getStringCell(row.getCell(7)));
+
+                String room = dto.getRoom();
+                if (roomMapping.containsKey(room)) {
+                    CustomerRoomDTO existingDto = roomMapping.get(room);
+                    if (dto.getDob() == null) {
+                        dto.setDob(existingDto.getDob());
+                    }
+                    if (dto.getSex() == null) {
+                        dto.setSex(existingDto.getSex());
+                    }
+                    if (dto.getDoi() == null) {
+                        dto.setDoi(existingDto.getDoi());
+                    }
+                    if (dto.getDoe() == null) {
+                        dto.setDoe(existingDto.getDoe());
+                    }
+                }
+
+                roomMapping.put(room, dto);
 
                 dtoList.add(dto);
             }
@@ -121,8 +143,9 @@ public class ExcelParserService {
 
         return dtoList;
     }
+
     public ByteArrayInputStream exportToExcel(List<CustomerRoomFullInfoDTO> data) throws IOException {
-        String[] headers = {"Full Name", "Sex", "DOB", "Room", "Passport No", "DOI", "DOE"};
+        String[] headers = {"STT","Full Name", "Sex", "DOB", "Room", "Passport No", "DOI", "DOE"};
 
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Sheet sheet = workbook.createSheet("Customer Room Full Info");
@@ -138,14 +161,16 @@ public class ExcelParserService {
             int rowIdx = 1;
             for (CustomerRoomFullInfoDTO dto : data) {
                 Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(dto.getStt());
 
-                row.createCell(0).setCellValue(dto.getFullName());
-                row.createCell(1).setCellValue(dto.getSex());
-                row.createCell(2).setCellValue(dto.getDob() != null ? dto.getDob().toString() : "");
-                row.createCell(3).setCellValue(dto.getRoom());
-                row.createCell(4).setCellValue(dto.getPassportNo() != null ? dto.getPassportNo() : "");
-                row.createCell(5).setCellValue(dto.getDoi() != null ? dto.getDoi().toString() : "");
-                row.createCell(6).setCellValue(dto.getDoe() != null ? dto.getDoe().toString() : "");
+                row.createCell(1).setCellValue(dto.getFullName());
+                row.createCell(2).setCellValue(dto.getSex());
+                row.createCell(4).setCellValue(dto.getDob() != null ? dto.getDob().toString() : "");
+                row.createCell(5).setCellValue(dto.getPassportNo() != null ? dto.getPassportNo() : "");
+                row.createCell(6).setCellValue(dto.getDoi() != null ? dto.getDoi().toString() : "");
+                row.createCell(7).setCellValue(dto.getDoe() != null ? dto.getDoe().toString() : "");
+                row.createCell(8).setCellValue(dto.getRoom());
+
             }
 
             workbook.write(out);
