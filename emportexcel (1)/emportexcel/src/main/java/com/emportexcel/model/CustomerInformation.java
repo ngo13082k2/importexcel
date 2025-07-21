@@ -24,8 +24,8 @@ public class CustomerInformation {
     private String sex;
     private String  dob;
     private String passportNo;
-    private String   doi;
-    private String   doe;
+    private String  doi;
+    private String  doe;
 
 
 

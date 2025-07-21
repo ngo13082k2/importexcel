@@ -162,14 +162,13 @@ public class ExcelParserService {
             for (CustomerRoomFullInfoDTO dto : data) {
                 Row row = sheet.createRow(rowIdx++);
                 row.createCell(0).setCellValue(dto.getStt());
-
                 row.createCell(1).setCellValue(dto.getFullName());
                 row.createCell(2).setCellValue(dto.getSex());
-                row.createCell(4).setCellValue(dto.getDob() != null ? dto.getDob().toString() : "");
-                row.createCell(5).setCellValue(dto.getPassportNo() != null ? dto.getPassportNo() : "");
-                row.createCell(6).setCellValue(dto.getDoi() != null ? dto.getDoi().toString() : "");
-                row.createCell(7).setCellValue(dto.getDoe() != null ? dto.getDoe().toString() : "");
-                row.createCell(8).setCellValue(dto.getRoom());
+                row.createCell(3).setCellValue(dto.getDob() != null ? dto.getDob().toString() : "");
+                row.createCell(4).setCellValue(dto.getPassportNo() != null ? dto.getPassportNo() : "");
+                row.createCell(5).setCellValue(dto.getDoi() != null ? dto.getDoi().toString() : "");
+                row.createCell(6).setCellValue(dto.getDoe() != null ? dto.getDoe().toString() : "");
+                row.createCell(7).setCellValue(dto.getRoom());
 
             }
 
