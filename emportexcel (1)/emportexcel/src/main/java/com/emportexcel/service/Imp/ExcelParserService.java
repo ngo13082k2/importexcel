@@ -145,7 +145,7 @@ public class ExcelParserService {
     }
 
     public ByteArrayInputStream exportToExcel(List<CustomerRoomFullInfoDTO> data) throws IOException {
-        String[] headers = {"STT","Full Name", "Sex", "DOB", "Room", "Passport No", "DOI", "DOE"};
+        String[] headers = {"STT","Full Name", "Sex", "DOB", "Passport No", "DOI", "DOE", "Room"};
 
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Sheet sheet = workbook.createSheet("Customer Room Full Info");

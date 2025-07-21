@@ -74,11 +74,11 @@ public class CustomerRoomService {
                     dto.setFullName(room.getFullName());
                     dto.setSex(null);  // Để trống giới tính
                     dto.setDob(null);  // Để trống ngày sinh
-                    dto.setRoom(room.getRoom());  // Giữ lại thông tin phòng
                     dto.setPassportNo(null);  // Để trống số hộ chiếu
                     dto.setDoi(null);  // Để trống ngày cấp
                     dto.setDoe(null);  // Để trống ngày hết hạn
                     dto.setStt(room.getStt());  // Giữ lại số thứ tự
+                    dto.setRoom(room.getRoom());  // Giữ lại thông tin phòng
 
                     dto.setDuplicatedSTT(duplicatedSTT);  // Ghi rõ thông tin trùng tên và các STT
                     result.add(dto);
